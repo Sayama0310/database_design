@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct FunctionalDependency {
     pub(crate) determinant: Vec<String>,
     pub(crate) resultant: Vec<String>,
