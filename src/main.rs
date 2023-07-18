@@ -10,7 +10,7 @@ impl fmt::Display for FunctionalDependency {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let determinant = self.determinant.join(", ");
         let resultant = self.resultant.join(", ");
-        write!(f, "{} → {{{}}}", determinant, resultant)
+        write!(f, "{{{}}} → {{{}}}", determinant, resultant)
     }
 }
 
@@ -33,9 +33,8 @@ impl fmt::Display for Relation {
             .iter()
             .map(|dependency| format!("{}", dependency))
             .collect::<Vec<String>>()
-            .join(" ");
-
-        write!(f, "Relation: {}({}) FD: {}", self.relation_name, attributes, dependencies)
+            .join(", ");
+        write!(f, "Relation: {}({}), FD: {{{}}}", self.relation_name, attributes, dependencies)
     }
 }
 
@@ -44,40 +43,42 @@ fn main() {
     // Create relations
     let relations = vec![
         Relation {
-            relation_name: "employee".to_string(),
+            relation_name: "students".to_string(),
             schema: RelationSchema {
                 attributes: vec![
                     "id".to_string(),
                     "name".to_string(),
-                    "age".to_string(),
-                    "address".to_string(),
-                    "salary".to_string(),
+                    "academic_year".to_string(),
+                    "faculty".to_string(),
+                    "faculty_location".to_string(),
+                    "subject_name".to_string(),
+                    "grade".to_string(),
+                    "teacher".to_string(),
                 ],
                 functional_dependencies: vec![
                     FunctionalDependency {
                         determinant: vec!["id".to_string()],
                         resultant: vec![
                             "name".to_string(),
-                            "age".to_string(),
-                            "address".to_string(),
-                            "salary".to_string(),
+                            "academic_year".to_string(),
+                            "faculty".to_string(),
+                            "faculty_location".to_string(),
+                            "subject_name".to_string(),
+                            "grade".to_string(),
+                            "teacher".to_string(),
                         ],
-                    }
+                    },
+                    FunctionalDependency {
+                        determinant: vec!["faculty".to_string()],
+                        resultant: vec!["faculty_location".to_string()],
+                    },
+                    FunctionalDependency {
+                        determinant: vec!["subject_name".to_string()],
+                        resultant: vec!["teacher".to_string()],
+                    },
                 ],
             },
-        },
-        Relation {
-            relation_name: "project".to_string(),
-            schema: RelationSchema {
-                attributes: vec![
-                    "id".to_string(),
-                    "name".to_string(),
-                    "location".to_string(),
-                    "manager_id".to_string(),
-                ],
-                functional_dependencies: vec![],
-            },
-        },
+        }
     ];
     // Show relations
     for relation in relations {
