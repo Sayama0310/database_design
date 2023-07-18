@@ -1,43 +1,6 @@
-use std::fmt;
+use crate::models::{FunctionalDependency, Relation, RelationSchema};
 
-#[derive(Debug)]
-struct FunctionalDependency {
-    determinant: Vec<String>,
-    resultant: Vec<String>,
-}
-
-impl fmt::Display for FunctionalDependency {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let determinant = self.determinant.join(", ");
-        let resultant = self.resultant.join(", ");
-        write!(f, "{{{}}} → {{{}}}", determinant, resultant)
-    }
-}
-
-struct RelationSchema {
-    attributes: Vec<String>,
-    functional_dependencies: Vec<FunctionalDependency>,
-}
-
-struct Relation {
-    relation_name: String,
-    schema: RelationSchema,
-}
-
-impl fmt::Display for Relation {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let attributes = self.schema.attributes.join(", ");
-        let dependencies = self
-            .schema
-            .functional_dependencies
-            .iter()
-            .map(|dependency| format!("{}", dependency))
-            .collect::<Vec<String>>()
-            .join(", ");
-        write!(f, "Relation: {}({}), FD: {{{}}}", self.relation_name, attributes, dependencies)
-    }
-}
-
+mod models;
 
 fn main() {
     // Create relations
