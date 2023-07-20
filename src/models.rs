@@ -186,3 +186,10 @@ impl fmt::Display for Relation {
         )
     }
 }
+
+impl Relation {
+    pub(crate) fn synthetic_approach_decompose(&self) -> Vec<Relation> {
+        // TODO implement
+        return vec![];
+    }
+}
