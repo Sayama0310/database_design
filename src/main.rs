@@ -6,7 +6,7 @@ mod models;
 
 fn main() {
     // Create relations
-    let relations = vec![Relation {
+    let relation = Relation {
         relation_name: "students".to_string(),
         schema: RelationSchema::new(
             Attributes::new(vec![
@@ -42,11 +42,9 @@ fn main() {
                 },
             ]),
         ),
-    }];
+    };
     // Show relations
-    for relation in &relations {
-        println!("{}", relation);
-    }
+    println!("{}", relation);
 
     // Find minimal cover
     // let minimal_cover = find_minimal_cover(relations[0].schema.functional_dependencies.clone());
