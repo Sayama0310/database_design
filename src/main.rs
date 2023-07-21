@@ -1,6 +1,4 @@
-use crate::models::{
-    Attributes, FunctionalDependencies, FunctionalDependency, Relation, RelationSchema,
-};
+use crate::models::{FunctionalDependency, Relation, RelationSchema};
 
 mod models;
 
@@ -9,7 +7,7 @@ fn main() {
     let relation = Relation {
         relation_name: "students".to_string(),
         schema: RelationSchema::new(
-            Attributes::new(vec![
+            vec![
                 "id".to_string(),
                 "name".to_string(),
                 "academic_year".to_string(),
@@ -18,8 +16,8 @@ fn main() {
                 "subject_name".to_string(),
                 "grade".to_string(),
                 "teacher".to_string(),
-            ]),
-            FunctionalDependencies::new(vec![
+            ],
+            vec![
                 FunctionalDependency {
                     determinant: vec!["id".to_string()],
                     resultant: vec![
@@ -40,13 +38,14 @@ fn main() {
                     determinant: vec!["subject_name".to_string()],
                     resultant: vec!["teacher".to_string()],
                 },
-            ]),
+            ],
         ),
     };
     // Show relations
     println!("{}", relation);
 
-    // Find minimal cover
-    // let minimal_cover = find_minimal_cover(relations[0].schema.functional_dependencies.clone());
-    // println!("Minimal cover: {:?}", minimal_cover);
+    // Decompose relation
+    for relation in relation.synthetic_approach_decompose() {
+        println!("{}", relation);
+    }
 }
